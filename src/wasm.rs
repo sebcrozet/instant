@@ -84,7 +84,7 @@ fn duration_to_f64(d: Duration) -> f64 {
 
 #[cfg(feature = "stdweb")]
 #[allow(unused_results)] // Needed because the js macro triggers it.
-fn now() -> f64 {
+pub fn now() -> f64 {
     use stdweb::unstable::TryInto;
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
@@ -103,6 +103,6 @@ mod performance {
 }
 
 #[cfg(feature = "wasm-bindgen")]
-fn now() -> f64 {
+pub fn now() -> f64 {
     performance::now()
 }

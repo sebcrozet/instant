@@ -5,14 +5,20 @@ authors = ["sebcrozet <developer@crozet.re>"]
 edition = "2018"
 description = "A partial replacement for std::time::Instant that works on WASM too."
 
+[features]
+now = [ "time" ]
+
+[target.'cfg(not(any(feature = "stdweb", feature = "wasm-bindgen")))'.dependencies]
+time = { version = "0.1", optional = true }
+
 [target.wasm32-unknown-unknown.dependencies]
 stdweb = { version = "0.4", optional = true }
-wasm-bindgen = { version = "0.2.21", optional = true }
+wasm-bindgen = { version = "0.2", optional = true }
 
 [target.wasm32-unknown-emscripten.dependencies]
 stdweb = { version = "0.4", optional = true }
-wasm-bindgen = { version = "0.2.21", optional = true }
+wasm-bindgen = { version = "0.2", optional = true }
 
 [target.asmjs-unknown-emscripten.dependencies]
 stdweb = { version = "0.4", optional = true }
-wasm-bindgen = { version = "0.2.21", optional = true }
+wasm-bindgen = { version = "0.2", optional = true }
