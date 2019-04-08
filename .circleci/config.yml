@@ -11,20 +11,23 @@ jobs:
     steps:
       - checkout
       - run:
+          name: install cargo-web
+          command: cargo install -f cargo-web;
+      - run:
           name: build
           command: cargo build --verbose;
       - run:
           name: build --features stdweb
-          command: cargo build --verbose --features "stdweb";
+          command: cargo web build --verbose --target wasm32-unknown-unknown --features "stdweb";
       - run:
           name: build --features wasm-bindgen
-          command: cargo build --verbose --features "wasm-bindgen";
+          command: cargo build --verbose --target wasm32-unknown-unknown --features "wasm-bindgen";
       - run:
           name: build --features now
           command: cargo build --verbose --features now;
       - run:
           name: build --features now stdweb
-          command: cargo build --verbose --features "now stdweb";
+          command: cargo web build --verbose --target wasm32-unknown-unknown --features "now stdweb";
       - run:
           name: build --features now wasm-bindgen
-          command: cargo build --verbose --features "now wasm-bindgen";
+          command: cargo build --verbose --target wasm32-unknown-unknown --features "now wasm-bindgen";
