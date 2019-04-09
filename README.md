@@ -12,21 +12,23 @@ replacement for `std::time::Instant` that works on WASM too. This defines the ty
 Note that even if the **stdweb** or **wasm-bindgen** feature is enabled, this crate will continue to rely on `std::time::Instant`
 as long as you are not targeting wasm32. This allows for portable code that will work on both native and WASM platforms.
 
-### The `now` feature.
+### The feature `now`.
 By enabling the feature `now` the function `instant::now()` will be exported and will either:
 
-* Call `time::precise_time_s() * 1000.0` when compiling for a non-WASM platform.
 * Call `performance.now()` when compiling for a WASM platform with the features **stdweb** or **wasm-bindgen** enabled.
+* Call `time::precise_time_s() * 1000.0` otherwise.
 
 The result is expressed in milliseconds.
 
-### Examples
-#### Using `instant` for a native platform.
+## Examples
+### Using `instant` for a native platform.
+_Cargo.toml_:
 ```toml
 [dependencies]
 instant = "0.1"
 ```
 
+_main.rs_:
 ```rust
 fn main() {
     // Will be the same as `std::time::Instant`.
@@ -34,14 +36,18 @@ fn main() {
 }
 ```
 
+-----
 
-#### Using `instant` for a WASM platform.
+### Using `instant` for a WASM platform.
 This examples shows the use of the `stdweb` feature. It would be similar with `wasm-bindgen`.
+
+_Cargo.toml_:
 ```toml
 [dependencies]
 instant = { version = "0.1", features = [ "stdweb" ] }
 ```
 
+_main.rs_:
 ```rust
 fn main() {
     // Will emulate `std::time::Instant` based on `performance.now()`.
@@ -49,7 +55,10 @@ fn main() {
 }
 ```
 
-#### Using `instant` for a any platform by enable a feature transitively.
+-----
+
+### Using `instant` for any platform enabling a feature transitively.
+_Cargo.toml_:
 ```toml
 [features]
 stdweb = [ "instant/stdweb" ]
@@ -59,16 +68,19 @@ wasm-bindgen = [ "instant/wasm-bindgen" ]
 instant = "0.1"
 ```
 
+_lib.rs_:
 ```rust
-fn main() {
+fn my_function() {
     // Will select the proper implementation depending on the
     // feature selected by the user.
     let now = instant::Instant::new();
 }
 ```
 
+-----
 
-#### Using the `now` feature.
+### Using the feature `now`.
+_Cargo.toml_:
 ```toml
 [features]
 stdweb = [ "instant/stdweb" ]
@@ -78,8 +90,9 @@ wasm-bindgen = [ "instant/wasm-bindgen" ]
 instant = { version = "0.1", features = [ "now" ] }
 ```
 
+_lib.rs_:
 ```rust
-fn main() {
+fn my_function() {
     // Will select the proper implementation depending on the
     // feature selected by the user.
     let now_instant = instant::Instant::new();
