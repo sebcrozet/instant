@@ -2,8 +2,16 @@
 name = "instant"
 version = "0.1.0"
 authors = ["sebcrozet <developer@crozet.re>"]
-edition = "2018"
 description = "A partial replacement for std::time::Instant that works on WASM too."
+repository = "https://github.com/sebcrozet/instant"
+readme = "README.md"
+license = "BSD-3-Clause"
+keywords = [ "time", "wasm" ]
+edition = "2018"
+
+
+
+
 
 [features]
 now = [ "time" ]
