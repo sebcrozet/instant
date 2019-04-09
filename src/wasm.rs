@@ -74,12 +74,12 @@ impl SubAssign<Duration> for Instant {
 
 fn duration_from_f64(millis: f64) -> Duration {
     Duration::from_millis(millis.trunc() as u64) +
-        Duration::from_nanos((millis.fract() * 1_000_000.0) as u64)
+        Duration::from_nanos((millis.fract() * 1.0e6) as u64)
 }
 
 fn duration_to_f64(d: Duration) -> f64 {
-    d.as_secs() as f64 * 1e3
-        + d.subsec_nanos() as f64 * 1e-6
+    d.as_secs() as f64 * 1.0e3
+        + d.subsec_nanos() as f64 * 1.0e-6
 }
 
 #[cfg(feature = "stdweb")]
