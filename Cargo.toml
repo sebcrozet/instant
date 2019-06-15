@@ -9,6 +9,8 @@ license = "BSD-3-Clause"
 keywords = [ "time", "wasm" ]
 edition = "2018"
 
+[lib]
+crate-type = ["cdylib", "rlib"]
 
 [features]
 now = [ "time" ]
@@ -27,3 +29,6 @@ wasm-bindgen = { version = "0.2", optional = true }
 [target.asmjs-unknown-emscripten.dependencies]
 stdweb = { version = "0.4", optional = true }
 wasm-bindgen = { version = "0.2", optional = true }
+
+[dev-dependencies]
+wasm-bindgen-test = "0.2"
