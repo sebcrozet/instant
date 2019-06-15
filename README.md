@@ -1,6 +1,6 @@
 # Instant
 
-I you call `std::time::Instant::now()` on a WASM platform, it will panic. This creates provides a partial
+I you call `std::time::Instant::now()` on a WASM platform, it will panic. This crate provides a partial
 replacement for `std::time::Instant` that works on WASM too. This defines the type `instant::Instant` which is:
 
 * A struct emulating the behavior of **std::time::Instant** if your are targeting `wasm32-unknown-unknown` or `wasm32-unknown-asmjs`
