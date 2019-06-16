@@ -9,3 +9,4 @@ Cargo.lock
 target
 .idea
 wasm-pack.log
+bin
