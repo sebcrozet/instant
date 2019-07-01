@@ -4,7 +4,7 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
 #[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
-pub struct Instant(pub f64);
+pub struct Instant(f64);
 
 impl Ord for Instant {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
@@ -103,8 +103,8 @@ mod performance {
     }
 }
 
-#[cfg(feature = "wasm-bindgen")]
 pub fn now() -> f64 {
+    #[cfg(feature = "wasm-bindgen")]
     web_sys::window()
         .expect("should have a window in this context")
         .performance()
