@@ -1,7 +1,5 @@
 use std::ops::{Add, Sub, AddAssign, SubAssign};
 use crate::Duration;
-use wasm_bindgen::prelude::*;
-use wasm_bindgen::JsCast;
 
 #[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
 pub struct Instant(f64);

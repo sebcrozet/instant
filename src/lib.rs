@@ -44,6 +44,9 @@ pub use std::time::Duration;
     not(any(feature = "stdweb", feature = "wasm-bindgen"))
 ))]
 mod native;
+#[cfg(feature="wasm-bingen")]
+extern crate web_sys;
+
 #[cfg(all(
     any(target_arch = "wasm32", target_arch = "asmjs"),
     any(feature = "stdweb", feature = "wasm-bindgen")
