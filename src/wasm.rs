@@ -1,5 +1,5 @@
-use std::time::Duration;
 use std::ops::{Add, AddAssign, Sub, SubAssign};
+use std::time::Duration;
 
 #[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
 pub struct Instant(f64);
@@ -80,7 +80,7 @@ fn duration_from_f64(millis: f64) -> Duration {
 }
 
 fn duration_to_f64(d: Duration) -> f64 {
-    d.as_secs() as f64 * 1.0e3 + d.subsec_nanos() as f64 * 1.0e-6
+    d.as_secs() as f64 * 1.0e3 + f64::from(d.subsec_nanos()) * 1.0e-6
 }
 
 #[cfg(feature = "stdweb")]
