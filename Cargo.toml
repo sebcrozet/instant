@@ -14,21 +14,22 @@ crate-type = ["cdylib", "rlib"]
 
 [features]
 now = [ "time" ]
+wasm-bindgen = ["web_sys"]
 
 [target.'cfg(not(any(feature = "stdweb", feature = "wasm-bindgen")))'.dependencies]
 time = { version = "0.1", optional = true }
 
 [target.wasm32-unknown-unknown.dependencies]
 stdweb = { version = "0.4", optional = true }
-wasm-bindgen = { version = "0.2", optional = true }
+web_sys = { package = "web-sys", version = "0.3", optional = true, features = ['Window', 'Performance', 'PerformanceTiming'] }
 
 [target.wasm32-unknown-emscripten.dependencies]
 stdweb = { version = "0.4", optional = true }
-wasm-bindgen = { version = "0.2", optional = true }
+web_sys = { package = "web-sys", version = "0.3", optional = true, features = ['Window', 'Performance', 'PerformanceTiming'] }
 
 [target.asmjs-unknown-emscripten.dependencies]
 stdweb = { version = "0.4", optional = true }
-wasm-bindgen = { version = "0.2", optional = true }
+web_sys = { package = "web-sys", version = "0.3", optional = true, features = ['Window', 'Performance', 'PerformanceTiming'] }
 
 [dev-dependencies]
 wasm-bindgen-test = "0.2"
