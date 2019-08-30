@@ -1,9 +1,9 @@
 # Instant
 
-I you call `std::time::Instant::now()` on a WASM platform, it will panic. This crate provides a partial
+If you call `std::time::Instant::now()` on a WASM platform, it will panic. This crate provides a partial
 replacement for `std::time::Instant` that works on WASM too. This defines the type `instant::Instant` which is:
 
-* A struct emulating the behavior of **std::time::Instant** if your are targeting `wasm32-unknown-unknown` or `wasm32-unknown-asmjs`
+* A struct emulating the behavior of **std::time::Instant** if you are targeting `wasm32-unknown-unknown` or `wasm32-unknown-asmjs`
 **and** you enabled either the `stdweb` or the `wasm-bindgen` feature. This emulation is based on the javascript `performance.now()` function.
 * A type alias for `std::time::Instant` otherwise.
 
@@ -39,7 +39,7 @@ fn main() {
 -----
 
 ### Using `instant` for a WASM platform.
-This examples shows the use of the `stdweb` feature. It would be similar with `wasm-bindgen`.
+This example shows the use of the `stdweb` feature. It would be similar with `wasm-bindgen`.
 
 _Cargo.toml_:
 ```toml
