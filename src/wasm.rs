@@ -162,11 +162,8 @@ pub fn now() -> f64 {
     return unsafe { js::_emscripten_get_now() };
 }
 
-//#[derive(Copy, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
 pub struct SystemTime(f64);
-
-impl Eq for SystemTime {}
 
 impl SystemTime {
     pub const UNIX_EPOCH: SystemTime = SystemTime(0.0);

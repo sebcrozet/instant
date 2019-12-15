@@ -50,9 +50,7 @@ fn test_checked_sub() {
 
 #[wasm_bindgen_test]
 fn test_system_time() {
-    assert!(
-        SystemTime::UNIX_EPOCH
-            .duration_since(SystemTime::now())
-            .is_err()
-    );
+    assert!(SystemTime::UNIX_EPOCH
+        .duration_since(SystemTime::now())
+        .is_err());
 }
