@@ -1,6 +1,5 @@
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 use std::time::Duration;
-use std::cmp::Ordering;
 
 #[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
 pub struct Instant(f64);
@@ -103,28 +102,8 @@ pub fn now() -> f64 {
         .now()
 }
 
-#[derive(Copy, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
 pub struct SystemTime(f64);
-
-impl PartialEq for SystemTime {
-    fn eq(&self, other: &SystemTime) -> bool {
-        self.inner == other.inner
-    }
-}
-
-impl Eq for SystemTime {}
-
-impl PartialOrd for SystemTime {
-    fn partial_cmp(&self, other: &SystemTime) -> Option<Ordering> {
-        self.inner.partial_cmp(&other.inner)
-    }
-}
-
-impl Ord for SystemTime {
-    fn cmp(&self, other: &Self) -> Ordering {
-        self.inner.partial_cmp(&other.inner).unwrap()
-    }
-}
 
 impl SystemTime {
     pub const UNIX_EPOCH: SystemTime = SystemTime(0.0);
@@ -134,7 +113,7 @@ impl SystemTime {
     }
 
     pub fn duration_since(&self, earlier: SystemTime) -> Result<Duration, ()> {
-        let dur_ms = self.inner - earlier.inner;
+        let dur_ms = self.0 - earlier.0;
         if dur_ms < 0.0 {
             return Err(())
         }
@@ -158,7 +137,7 @@ impl Add<Duration> for SystemTime {
     type Output = SystemTime;
 
     fn add(self, other: Duration) -> SystemTime {
-        SystemTime(self.inner + other.as_millis() as f64)
+        SystemTime(self.0 + other.as_millis() as f64)
     }
 }
 
@@ -166,7 +145,7 @@ impl Sub<Duration> for SystemTime {
     type Output = SystemTime;
 
     fn sub(self, other: Duration) -> SystemTime {
-        SystemTime(self.inner - other.as_millis() as f64)
+        SystemTime(self.0 - other.as_millis() as f64)
     }
 }
 
