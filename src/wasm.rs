@@ -1,5 +1,6 @@
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 use std::time::Duration;
+use std::cmp::Ordering;
 
 #[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
 pub struct Instant(f64);
@@ -100,4 +101,83 @@ pub fn now() -> f64 {
         .performance()
         .expect("performance should be available")
         .now()
+}
+
+#[derive(Copy, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+pub struct SystemTime(f64);
+
+impl PartialEq for SystemTime {
+    fn eq(&self, other: &SystemTime) -> bool {
+        self.inner == other.inner
+    }
+}
+
+impl Eq for SystemTime {}
+
+impl PartialOrd for SystemTime {
+    fn partial_cmp(&self, other: &SystemTime) -> Option<Ordering> {
+        self.inner.partial_cmp(&other.inner)
+    }
+}
+
+impl Ord for SystemTime {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.inner.partial_cmp(&other.inner).unwrap()
+    }
+}
+
+impl SystemTime {
+    pub const UNIX_EPOCH: SystemTime = SystemTime(0.0);
+
+    pub fn now() -> SystemTime {
+        SystemTime(now())
+    }
+
+    pub fn duration_since(&self, earlier: SystemTime) -> Result<Duration, ()> {
+        let dur_ms = self.inner - earlier.inner;
+        if dur_ms < 0.0 {
+            return Err(())
+        }
+        Ok(Duration::from_millis(dur_ms as u64))
+    }
+
+    pub fn elapsed(&self) -> Result<Duration, ()> {
+        self.duration_since(SystemTime::now())
+    }
+
+    pub fn checked_add(&self, duration: Duration) -> Option<SystemTime> {
+        Some(*self + duration)
+    }
+
+    pub fn checked_sub(&self, duration: Duration) -> Option<SystemTime> {
+        Some(*self - duration)
+    }
+}
+
+impl Add<Duration> for SystemTime {
+    type Output = SystemTime;
+
+    fn add(self, other: Duration) -> SystemTime {
+        SystemTime(self.inner + other.as_millis() as f64)
+    }
+}
+
+impl Sub<Duration> for SystemTime {
+    type Output = SystemTime;
+
+    fn sub(self, other: Duration) -> SystemTime {
+        SystemTime(self.inner - other.as_millis() as f64)
+    }
+}
+
+impl AddAssign<Duration> for SystemTime {
+    fn add_assign(&mut self, rhs: Duration) {
+        *self = *self + rhs;
+    }
+}
+
+impl SubAssign<Duration> for SystemTime {
+    fn sub_assign(&mut self, rhs: Duration) {
+        *self = *self - rhs;
+    }
 }
