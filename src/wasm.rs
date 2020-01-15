@@ -1,8 +1,8 @@
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 use std::time::Duration;
 
-#[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
-pub struct Instant(f64);
+#[derive(Copy, Clone, Debug, PartialEq, PartialOrd, Hash)]
+pub struct Instant(Duration);
 
 impl Ord for Instant {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
@@ -15,7 +15,7 @@ impl Eq for Instant {}
 impl Instant {
     #[inline]
     pub fn now() -> Self {
-        Instant(now())
+        Instant(duration_from_f64(now()))
     }
 
     #[inline]
@@ -24,7 +24,7 @@ impl Instant {
             earlier.0 <= self.0,
             "`earlier` cannot be later than `self`."
         );
-        duration_from_f64(self.0 - earlier.0)
+        self.0 - earlier.0
     }
 
     #[inline]
@@ -38,14 +38,14 @@ impl Add<Duration> for Instant {
 
     #[inline]
     fn add(self, rhs: Duration) -> Self {
-        Instant(self.0 + duration_to_f64(rhs))
+        Instant(self.0 + rhs)
     }
 }
 
 impl AddAssign<Duration> for Instant {
     #[inline]
     fn add_assign(&mut self, rhs: Duration) {
-        self.0 += duration_to_f64(rhs)
+        self.0 += rhs
     }
 }
 
@@ -54,7 +54,7 @@ impl Sub<Duration> for Instant {
 
     #[inline]
     fn sub(self, rhs: Duration) -> Self {
-        Instant(self.0 - duration_to_f64(rhs))
+        Instant(self.0 - rhs)
     }
 }
 
@@ -70,7 +70,7 @@ impl Sub<Instant> for Instant {
 impl SubAssign<Duration> for Instant {
     #[inline]
     fn sub_assign(&mut self, rhs: Duration) {
-        self.0 -= duration_to_f64(rhs)
+        self.0 -= rhs
     }
 }
 
