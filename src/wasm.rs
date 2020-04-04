@@ -95,9 +95,10 @@ pub fn now() -> f64 {
 
 #[cfg(feature = "wasm-bindgen")]
 pub fn now() -> f64 {
-    web_sys::window()
-        .expect("should have a window in this context")
-        .performance()
-        .expect("performance should be available")
-        .now()
+    use wasm_bindgen_rs::JsCast;
+    use wasm_bindgen_rs::prelude::*;
+    js_sys::Reflect::get(&js_sys::global(), &JsValue::from_str("performance"))
+        .expect("failed to get performance from global object")
+	.unchecked_into::<web_sys::Performance>()
+	.now()
 }
