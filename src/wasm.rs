@@ -102,3 +102,62 @@ pub fn now() -> f64 {
 	.unchecked_into::<web_sys::Performance>()
 	.now()
 }
+
+#[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
+pub struct SystemTime(f64);
+
+impl SystemTime {
+    pub const UNIX_EPOCH: SystemTime = SystemTime(0.0);
+
+    pub fn now() -> SystemTime {
+        SystemTime(now())
+    }
+
+    pub fn duration_since(&self, earlier: SystemTime) -> Result<Duration, ()> {
+        let dur_ms = self.0 - earlier.0;
+        if dur_ms < 0.0 {
+            return Err(())
+        }
+        Ok(Duration::from_millis(dur_ms as u64))
+    }
+
+    pub fn elapsed(&self) -> Result<Duration, ()> {
+        self.duration_since(SystemTime::now())
+    }
+
+    pub fn checked_add(&self, duration: Duration) -> Option<SystemTime> {
+        Some(*self + duration)
+    }
+
+    pub fn checked_sub(&self, duration: Duration) -> Option<SystemTime> {
+        Some(*self - duration)
+    }
+}
+
+impl Add<Duration> for SystemTime {
+    type Output = SystemTime;
+
+    fn add(self, other: Duration) -> SystemTime {
+        SystemTime(self.0 + other.as_millis() as f64)
+    }
+}
+
+impl Sub<Duration> for SystemTime {
+    type Output = SystemTime;
+
+    fn sub(self, other: Duration) -> SystemTime {
+        SystemTime(self.0 - other.as_millis() as f64)
+    }
+}
+
+impl AddAssign<Duration> for SystemTime {
+    fn add_assign(&mut self, rhs: Duration) {
+        *self = *self + rhs;
+    }
+}
+
+impl SubAssign<Duration> for SystemTime {
+    fn sub_assign(&mut self, rhs: Duration) {
+        *self = *self - rhs;
+    }
+}

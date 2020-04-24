@@ -1,4 +1,5 @@
 pub type Instant = std::time::Instant;
+pub type SystemTime = std::time::SystemTime;
 
 /// The current time, in milliseconds.
 #[cfg(feature = "now")]
