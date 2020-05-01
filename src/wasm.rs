@@ -95,10 +95,23 @@ pub fn now() -> f64 {
 
 #[cfg(feature = "wasm-bindgen")]
 pub fn now() -> f64 {
-    use wasm_bindgen_rs::JsCast;
     use wasm_bindgen_rs::prelude::*;
+    use wasm_bindgen_rs::JsCast;
     js_sys::Reflect::get(&js_sys::global(), &JsValue::from_str("performance"))
         .expect("failed to get performance from global object")
-	.unchecked_into::<web_sys::Performance>()
-	.now()
+        .unchecked_into::<web_sys::Performance>()
+        .now()
+}
+
+// The JS now function is in a module so it won't have to be renamed
+#[cfg(not(any(feature = "wasm-bindgen", feature = "stdweb")))]
+mod js {
+    extern "C" {
+        pub fn now() -> f64;
+    }
+}
+// Make the unsafe extern function "safe" so it can be called like the other 'now' functions
+#[cfg(not(any(feature = "wasm-bindgen", feature = "stdweb")))]
+pub fn now() -> f64 {
+    unsafe { js::now() }
 }

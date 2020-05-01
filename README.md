@@ -15,7 +15,7 @@ as long as you are not targeting wasm32. This allows for portable code that will
 ### The feature `now`.
 By enabling the feature `now` the function `instant::now()` will be exported and will either:
 
-* Call `performance.now()` when compiling for a WASM platform with the features **stdweb** or **wasm-bindgen** enabled.
+* Call `performance.now()` when compiling for a WASM platform with the features **stdweb** or **wasm-bindgen** enabled, or using a custom javascript function.
 * Call `time::precise_time_s() * 1000.0` otherwise.
 
 The result is expressed in milliseconds.
@@ -97,5 +97,28 @@ fn my_function() {
     // feature selected by the user.
     let now_instant = instant::Instant::new();
     let now_milliseconds = instant::now(); // In milliseconds.
+}
+```
+
+### Using the feature `now` without `stdweb` or `wasm-bindgen`.
+_Cargo.toml_:
+```toml
+[dependencies]
+instant = { version = "0.", features = [ "now" ] }
+```
+
+_lib.rs_:
+```rust
+fn my_function() {
+    // Will use the 'now' javascript implementation.
+    let now_instant = instant::Instant::new();
+    let now_milliseconds = instant::now(); // In milliseconds.
+}
+```
+
+_javascript WASM bindings file_:
+```js
+function now() {
+	return Date.now() / 1000.0;
 }
 ```
