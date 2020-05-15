@@ -31,6 +31,22 @@ impl Instant {
     pub fn elapsed(&self) -> Duration {
         Self::now().duration_since(*self)
     }
+
+    /// Returns `Some(t)` where `t` is the time `self + duration` if `t` can be represented as
+    /// `Instant` (which means it's inside the bounds of the underlying data structure), `None`
+    /// otherwise.
+    #[inline]
+    pub fn checked_add(&self, duration: Duration) -> Option<Instant> {
+        self.0.checked_add(duration).map(Instant)
+    }
+
+    /// Returns `Some(t)` where `t` is the time `self - duration` if `t` can be represented as
+    /// `Instant` (which means it's inside the bounds of the underlying data structure), `None`
+    /// otherwise.
+    #[inline]
+    pub fn checked_sub(&self, duration: Duration) -> Option<Instant> {
+        self.0.checked_sub(duration).map(Instant)
+    }
 }
 
 impl Add<Duration> for Instant {
