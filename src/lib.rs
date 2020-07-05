@@ -1,4 +1,7 @@
-#[cfg(all(any(target_arch = "wasm32", target_arch = "asmjs"), feature = "stdweb"))]
+#[cfg(all(
+    any(target_arch = "wasm32", target_arch = "asmjs"),
+    all(feature = "stdweb", not(feature = "wasm-bindgen"))
+))]
 #[macro_use]
 extern crate stdweb;
 

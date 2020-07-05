@@ -99,7 +99,7 @@ fn duration_to_f64(d: Duration) -> f64 {
     d.as_secs() as f64 * 1.0e3 + f64::from(d.subsec_nanos()) * 1.0e-6
 }
 
-#[cfg(feature = "stdweb")]
+#[cfg(all(feature = "stdweb", not(feature = "wasm-bindgen")))]
 #[allow(unused_results)] // Needed because the js macro triggers it.
 pub fn now() -> f64 {
     use stdweb::unstable::TryInto;
