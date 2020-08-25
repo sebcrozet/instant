@@ -18,3 +18,5 @@ cfg_if::cfg_if! {
         pub use native::now;
     }
 }
+
+pub use std::time::Duration;
