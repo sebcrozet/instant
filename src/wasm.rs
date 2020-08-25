@@ -95,10 +95,6 @@ fn duration_from_f64(millis: f64) -> Duration {
         + Duration::from_nanos((millis.fract() * 1.0e6) as u64)
 }
 
-fn duration_to_f64(d: Duration) -> f64 {
-    d.as_secs() as f64 * 1.0e3 + f64::from(d.subsec_nanos()) * 1.0e-6
-}
-
 #[cfg(all(feature = "stdweb", not(feature = "wasm-bindgen")))]
 #[allow(unused_results)] // Needed because the js macro triggers it.
 pub fn now() -> f64 {
