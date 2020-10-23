@@ -14,7 +14,7 @@ now = [ "time" ]
 wasm-bindgen = ["js-sys", "wasm-bindgen_rs", "web-sys"]
 
 [dependencies]
-cfg-if = "0.1"
+cfg-if = "1"
 
 [target.'cfg(not(any(feature = "stdweb", feature = "wasm-bindgen")))'.dependencies]
 time = { version = "0.1", optional = true }
