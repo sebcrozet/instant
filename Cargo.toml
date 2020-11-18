@@ -12,6 +12,7 @@ edition = "2018"
 [features]
 now = [ "time" ]
 wasm-bindgen = ["js-sys", "wasm-bindgen_rs", "web-sys"]
+inaccurate = []
 
 [dependencies]
 cfg-if = "1.0"
