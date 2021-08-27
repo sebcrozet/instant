@@ -47,6 +47,24 @@ impl Instant {
     pub fn checked_sub(&self, duration: Duration) -> Option<Instant> {
         self.0.checked_sub(duration).map(Instant)
     }
+
+    /// Returns the amount of time elapsed from another instant to this one, or None if that
+    /// instant is later than this one.
+    #[inline]
+    pub fn checked_duration_since(&self, earlier: Instant) -> Option<Duration> {
+        if earlier.0 > self.0 {
+            None
+        } else {
+            Some(self.0 - earlier.0)
+        }
+    }
+
+    /// Returns the amount of time elapsed from another instant to this one, or zero duration if
+    /// that instant is later than this one.
+    #[inline]
+    pub fn saturating_duration_since(&self, earlier: Instant) -> Duration {
+        self.checked_duration_since(earlier).unwrap_or_default()
+    }
 }
 
 impl Add<Duration> for Instant {
