@@ -23,14 +23,12 @@ cfg_if::cfg_if! {
     not(any(target_arch = "wasm32", target_arch = "asmjs")),
     not(any(feature = "stdweb", feature = "wasm-bindgen"))
 ))]
-#[cfg(feature = "now")]
 pub use crate::native::SystemTime;
 
 #[cfg(all(
     any(target_arch = "wasm32", target_arch = "asmjs"),
     any(feature = "stdweb", feature = "wasm-bindgen")
 ))]
-#[cfg(feature = "now")]
 pub use crate::wasm::SystemTime;
 
 pub use std::time::Duration;
