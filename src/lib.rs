@@ -11,24 +11,14 @@ cfg_if::cfg_if! {
         pub use wasm::Instant;
         #[cfg(feature = "now")]
         pub use crate::wasm::now;
+        pub use wasm::SystemTime;
     } else {
         mod native;
         pub use native::Instant;
         #[cfg(feature = "now")]
         pub use native::now;
+        pub use native::SystemTime;
     }
 }
-
-#[cfg(any(
-    not(any(target_arch = "wasm32", target_arch = "asmjs")),
-    not(any(feature = "stdweb", feature = "wasm-bindgen"))
-))]
-pub use crate::native::SystemTime;
-
-#[cfg(all(
-    any(target_arch = "wasm32", target_arch = "asmjs"),
-    any(feature = "stdweb", feature = "wasm-bindgen")
-))]
-pub use crate::wasm::SystemTime;
 
 pub use std::time::Duration;

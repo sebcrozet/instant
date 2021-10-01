@@ -162,6 +162,18 @@ pub fn now() -> f64 {
     return unsafe { js::_emscripten_get_now() };
 }
 
+/// Returns the number of millisecods elapsed since January 1, 1970 00:00:00 UTC.
+#[cfg(any(feature = "wasm-bindgen", feature = "stdweb"))]
+fn get_time() -> f64 {
+    #[cfg(feature = "wasm-bindgen")]
+    return js_sys::Date::now();
+    #[cfg(all(feature = "stdweb", not(feature = "wasm-bindgen")))]
+    {
+        let v = js! { return Date.now(); };
+        return v.try_into().unwrap();
+    }
+}
+
 #[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
 pub struct SystemTime(f64);
 
@@ -169,7 +181,13 @@ impl SystemTime {
     pub const UNIX_EPOCH: SystemTime = SystemTime(0.0);
 
     pub fn now() -> SystemTime {
-        SystemTime(now())
+        cfg_if::cfg_if! {
+            if #[cfg(any(feature = "wasm-bindgen", feature = "stdweb"))] {
+                SystemTime(get_time())
+            } else {
+                SystemTime(now())
+            }
+        }
     }
 
     pub fn duration_since(&self, earlier: SystemTime) -> Result<Duration, ()> {
