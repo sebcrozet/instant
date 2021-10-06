@@ -1,7 +1,6 @@
 pub type Instant = std::time::Instant;
 
 /// The current time, expressed in milliseconds since the Unix Epoch.
-#[cfg(feature = "now")]
 pub fn now() -> f64 {
     std::time::SystemTime::now().duration_since(std::time::SystemTime::UNIX_EPOCH)
                                 .expect("System clock was before 1970.")

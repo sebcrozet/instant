@@ -9,12 +9,10 @@ cfg_if::cfg_if! {
 
         mod wasm;
         pub use wasm::Instant;
-        #[cfg(feature = "now")]
         pub use crate::wasm::now;
     } else {
         mod native;
         pub use native::Instant;
-        #[cfg(feature = "now")]
         pub use native::now;
     }
 }
