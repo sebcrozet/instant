@@ -32,7 +32,7 @@ _main.rs_:
 ```rust
 fn main() {
     // Will be the same as `std::time::Instant`.
-    let now = instant::Instant::new();
+    let now = instant::Instant::now();
 }
 ```
 
@@ -51,7 +51,7 @@ _main.rs_:
 ```rust
 fn main() {
     // Will emulate `std::time::Instant` based on `performance.now()`.
-    let now = instant::Instant::new();
+    let now = instant::Instant::now();
 }
 ```
 
@@ -70,7 +70,7 @@ _main.rs_:
 ```rust
 fn main() {
     // Will emulate `std::time::Instant` based on `Date.now()`.
-    let now = instant::Instant::new();
+    let now = instant::Instant::now();
 }
 ```
 
@@ -93,7 +93,7 @@ _lib.rs_:
 fn my_function() {
     // Will select the proper implementation depending on the
     // feature selected by the user.
-    let now = instant::Instant::new();
+    let now = instant::Instant::now();
 }
 ```
 
@@ -115,7 +115,7 @@ _lib.rs_:
 fn my_function() {
     // Will select the proper implementation depending on the
     // feature selected by the user.
-    let now_instant = instant::Instant::new();
+    let now_instant = instant::Instant::now();
     let now_milliseconds = instant::now(); // In milliseconds.
 }
 ```
@@ -131,7 +131,7 @@ _lib.rs_:
 ```rust
 fn my_function() {
     // Will use the 'now' javascript implementation.
-    let now_instant = instant::Instant::new();
+    let now_instant = instant::Instant::now();
     let now_milliseconds = instant::now(); // In milliseconds.
 }
 ```
