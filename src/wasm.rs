@@ -150,7 +150,7 @@ mod js {
         #[cfg(not(target_os = "emscripten"))]
         pub fn now() -> f64;
         #[cfg(target_os = "emscripten")]
-        pub fn _emscripten_get_now() -> f64;
+        pub fn emscripten_get_now() -> f64;
     }
 }
 // Make the unsafe extern function "safe" so it can be called like the other 'now' functions
@@ -159,7 +159,7 @@ pub fn now() -> f64 {
     #[cfg(not(target_os = "emscripten"))]
     return unsafe { js::now() };
     #[cfg(target_os = "emscripten")]
-    return unsafe { js::_emscripten_get_now() };
+    return unsafe { js::emscripten_get_now() };
 }
 
 /// Returns the number of millisecods elapsed since January 1, 1970 00:00:00 UTC.
