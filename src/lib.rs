@@ -1,5 +1,10 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+
 cfg_if::cfg_if! {
-    if #[cfg(any(
+    if #[cfg(not(feature = "std"))] {
+        mod instant;
+        pub use crate::instant::Instant;
+    } else if #[cfg(any(
         all(target_arch = "wasm32", not(target_os = "wasi")),
         target_arch = "asmjs"
     ))] {
@@ -7,8 +12,9 @@ cfg_if::cfg_if! {
         #[macro_use]
         extern crate stdweb;
 
+        mod instant;
+        pub use crate::instant::Instant;
         mod wasm;
-        pub use wasm::Instant;
         pub use crate::wasm::now;
         pub use wasm::SystemTime;
     } else {
@@ -19,4 +25,4 @@ cfg_if::cfg_if! {
     }
 }
 
-pub use std::time::Duration;
+pub use core::time::Duration;

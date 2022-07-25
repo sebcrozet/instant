@@ -1,18 +1,20 @@
 [package]
 name = "instant"
-version = "0.1.12"
+version = "0.1.13"
 authors = ["sebcrozet <developer@crozet.re>"]
-description = "A partial replacement for std::time::Instant that works on WASM too."
+description = "A partial replacement for std::time::Instant that works on no_std and WASM too."
 repository = "https://github.com/sebcrozet/instant"
 readme = "README.md"
 license = "BSD-3-Clause"
-keywords = [ "time", "wasm" ]
+keywords = [ "time", "wasm", "no_std" ]
 edition = "2018"
 
 [features]
 wasm-bindgen = ["js-sys", "wasm-bindgen_rs", "web-sys"]
 inaccurate = []
 now = []
+std = []
+default = ["std"]
 
 [dependencies]
 cfg-if = "1.0"
