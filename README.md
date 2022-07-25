@@ -1,18 +1,21 @@
 # Instant
 
+`std::time::Instant` does not exist for `#[no_std]` target.
 If you call `std::time::Instant::now()` on a WASM platform, it will panic. This crate provides a partial
-replacement for `std::time::Instant` that works on WASM too. This defines the type `instant::Instant` which is:
+replacement for `std::time::Instant` that works on `#[no_std]` and WASM too. 
+This defines the type `instant::Instant` which is:
 
+* A struct emulating the behavior of **std::time::Instant** if you disabled the feature `std`. A constructor function `Instant::drom_duration`
+  is provided to construct an instant from a `core::time::Duration`.
 * A struct emulating the behavior of **std::time::Instant** if you are targeting `wasm32-unknown-unknown` or `wasm32-unknown-asmjs`
 **and** you enabled either the `stdweb` or the `wasm-bindgen` feature. This emulation is based on the javascript `performance.now()` function.
 * A type alias for `std::time::Instant` otherwise.
 
-
-
 Note that even if the **stdweb** or **wasm-bindgen** feature is enabled, this crate will continue to rely on `std::time::Instant`
 as long as you are not targeting wasm32. This allows for portable code that will work on both native and WASM platforms.
 
-This crate also exports the function `instant::now()` which returns a representation of the current time as an `f64`, expressed in milliseconds, in a platform-agnostic way. `instant::now()` will either:
+With the `std` feature (enabled by default), this crate also exports the function `instant::now()` which returns a representation of the current time as an `f64`,
+expressed in milliseconds, in a platform-agnostic way. `instant::now()` will either:
 
 * Call `performance.now()` when compiling for a WASM platform with the features **stdweb** or **wasm-bindgen** enabled, or using a custom javascript function.
 * Return the time elapsed since the *Unix Epoch* on *native*, *non-WASM* platforms.

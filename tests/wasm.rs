@@ -1,3 +1,4 @@
+#![cfg(feature = "std")]
 extern crate wasm_bindgen_test;
 
 use instant::{Instant, SystemTime};

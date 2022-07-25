@@ -31,3 +31,6 @@ jobs:
       - run:
           name: build --features now wasm-bindgen
           command: cargo build --verbose --target wasm32-unknown-unknown --features "now wasm-bindgen";
+      - run:
+          name: build --no-default-features
+          command: cargo build --verbose --no-default-features;
