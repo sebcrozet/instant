@@ -190,15 +190,15 @@ impl SystemTime {
         }
     }
 
-    pub fn duration_since(&self, earlier: SystemTime) -> Result<Duration, ()> {
+    pub fn duration_since(&self, earlier: SystemTime) -> Result<Duration, SystemTimeError> {
         let dur_ms = self.0 - earlier.0;
         if dur_ms < 0.0 {
-            return Err(());
+            return Err(SystemTimeError(Duration::from_millis(-dur_ms as u64)));
         }
         Ok(Duration::from_millis(dur_ms as u64))
     }
 
-    pub fn elapsed(&self) -> Result<Duration, ()> {
+    pub fn elapsed(&self) -> Result<Duration, SystemTimeError> {
         self.duration_since(SystemTime::now())
     }
 
@@ -236,5 +236,27 @@ impl AddAssign<Duration> for SystemTime {
 impl SubAssign<Duration> for SystemTime {
     fn sub_assign(&mut self, rhs: Duration) {
         *self = *self - rhs;
+    }
+}
+
+#[derive(Clone, Debug)]
+pub struct SystemTimeError(Duration);
+
+impl SystemTimeError {
+    pub fn duration(&self) -> Duration {
+        self.0
+    }
+}
+
+impl std::fmt::Display for SystemTimeError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "second time provided was later than self")
+    }
+}
+
+impl std::error::Error for SystemTimeError {
+    #[allow(deprecated)]
+    fn description(&self) -> &str {
+        "other time was not earlier than self"
     }
 }
