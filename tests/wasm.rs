@@ -55,3 +55,10 @@ fn test_system_time() {
         .is_err());
 }
 
+#[wasm_bindgen_test]
+fn test_past() {
+    let hundred_sec = Duration::from_secs(100);
+    let hundred_seconds_ago = Instant::now() - hundred_sec;
+    assert!(hundred_seconds_ago.elapsed() >= hundred_sec);
+}
+
