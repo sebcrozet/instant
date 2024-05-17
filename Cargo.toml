@@ -1,6 +1,6 @@
 [package]
 name = "instant"
-version = "0.1.12"
+version = "0.1.13"
 authors = ["sebcrozet <developer@crozet.re>"]
 description = "Unmaintained, consider using web-time instead - A partial replacement for std::time::Instant that works on WASM to."
 repository = "https://github.com/sebcrozet/instant"
