@@ -16,7 +16,14 @@ impl Eq for Instant {}
 impl Instant {
     #[inline]
     pub fn now() -> Self {
-        Instant(duration_from_f64(now()))
+        // `performance.now()` starts counting from the creation of the page, which mean that
+        // instants before the page start are negative.
+        //
+        // So, to allow represing past instants using a `Duration` (that can't represent negative
+        // values), the duration will be increased by 2^63 seconds.
+
+        let duration = duration_from_f64(now());
+        Self(duration + Duration::from_secs(1 << 63))
     }
 
     #[inline]
