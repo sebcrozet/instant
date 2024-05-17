@@ -199,7 +199,7 @@ impl SystemTime {
     }
 
     pub fn elapsed(&self) -> Result<Duration, ()> {
-        self.duration_since(SystemTime::now())
+        Self::now().duration_since(*self)
     }
 
     pub fn checked_add(&self, duration: Duration) -> Option<SystemTime> {
