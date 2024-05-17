@@ -2,12 +2,15 @@
 name = "instant"
 version = "0.1.12"
 authors = ["sebcrozet <developer@crozet.re>"]
-description = "A partial replacement for std::time::Instant that works on WASM too."
+description = "Unmaintained, consider using web-time instead - A partial replacement for std::time::Instant that works on WASM to."
 repository = "https://github.com/sebcrozet/instant"
 readme = "README.md"
 license = "BSD-3-Clause"
 keywords = [ "time", "wasm" ]
 edition = "2018"
+
+[badges]
+maintenance = { status = "looking-for-maintainer" }
 
 [features]
 wasm-bindgen = ["js-sys", "wasm-bindgen_rs", "web-sys"]

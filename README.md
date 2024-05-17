@@ -1,5 +1,8 @@
 # Instant
 
+**This crate is no longer maintained. Please consider creating a fork or using `web-time` instead. Or reach out if
+  you are interested  in taking over its maintenance.**
+
 If you call `std::time::Instant::now()` on a WASM platform, it will panic. This crate provides a partial
 replacement for `std::time::Instant` that works on WASM too. This defines the type `instant::Instant` which is:
 
